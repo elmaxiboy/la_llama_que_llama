@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Is this AI?</title>
+  <style>
+    body { font-family: sans-serif; margin: 40px; }
+    #response { white-space: pre-line; border: 1px solid #ccc; padding: 10px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h1>La llama que llama 🦙</h1>
+  <input type="text" id="prompt" placeholder="Ask something..." size="50" />
+  <button onclick="send()">Send</button>
+  <div id="response"></div>
+
+  <script>
+    async function send() {
+      const prompt = document.getElementById("prompt").value;
+      document.getElementById("response").textContent = "Thinking...";
+
+      const res = await fetch("http://localhost:5000/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: prompt })
+      });
+
+      const data = await res.json();
+      typeWriter(data.response);
+    }
+
+    function typeWriter(text, i = 0) {
+      const el = document.getElementById("response");
+      el.textContent = "";
+      const interval = setInterval(() => {
+        el.textContent += text[i];
+        i++;
+        if (i >= text.length) clearInterval(interval);
+      }, 10);
+    }
+  </script>
+</body>
+</html>
