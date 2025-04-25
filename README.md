@@ -20,4 +20,4 @@ Move model to `llama.cpp/models` directory
 ```sh
 python app.py
 ```
-Navigate to `localhost:5000` and "lama a la llama" 🦙
+Navigate to `localhost:5000` and "llama a la llama" 🦙
